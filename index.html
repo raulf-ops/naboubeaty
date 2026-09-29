@@ -1,425 +1,226 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nabou Beauty | Salon de coiffure à Montréal</title>
-<meta name="description" content="Nabou Beauty — Salon de coiffure à Montréal spécialisé en tresses, soins capillaires et coiffure afro. Note de 4,7/5 sur 110 avis. Entreprise détenue par des femmes.">
-<meta name="theme-color" content="#8f3346">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qui est ta cruche ?</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; padding: 24px 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(120deg, #ff8fc7, #ffc2e2, #9ad0ff, #5aa9ff, #9ad0ff, #ffc2e2, #ff8fc7);
+      background-size: 300% 300%;
+      animation: bgShift 14s ease-in-out infinite;
+      overflow-x: hidden;
+    }
+    @keyframes bgShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 
-<meta property="og:type" content="business.business">
-<meta property="og:title" content="Nabou Beauty | Salon de coiffure à Montréal">
-<meta property="og:description" content="Tresses, soins capillaires &amp; coiffure afro. Note de 4,7/5 sur 110 avis. Entreprise détenue par des femmes.">
-<meta property="og:image" content="assets/images/tresses-collees.png">
-<meta name="twitter:card" content="summary_large_image">
+    .heart {
+      position: fixed; bottom: -40px; pointer-events: none; user-select: none; opacity: 0;
+      animation: floatUp linear infinite; z-index: 0;
+    }
+    @keyframes floatUp { 0%{transform:translateY(0) rotate(0deg) scale(.8);opacity:0} 10%{opacity:.7} 100%{transform:translateY(-110vh) rotate(25deg) scale(1.2);opacity:0} }
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%238f3346'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%23fff' font-family='serif'%3EN%3C/text%3E%3C/svg%3E">
+    .wrap { position: relative; z-index: 1; width: 100%; max-width: 400px; }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    .card {
+      background: rgba(255,255,255,.92); backdrop-filter: blur(14px);
+      padding: 38px 26px 30px; border-radius: 30px; text-align: center;
+      border: 1px solid rgba(255,255,255,.75);
+      box-shadow: 0 26px 80px rgba(60,60,160,.32), 0 0 0 7px rgba(255,255,255,.25);
+      animation: cardIn .55s cubic-bezier(.2,.9,.3,1.2) both;
+      position: relative; overflow: hidden;
+    }
+    @keyframes cardIn { from{opacity:0;transform:translateY(22px) scale(.94)} to{opacity:1;transform:none} }
+    .card::before {
+      content: ''; position: absolute; inset: 0; border-radius: 30px; padding: 2px;
+      background: linear-gradient(135deg, #ff8fc7, #9ad0ff, #ff8fc7); background-size: 300% 300%;
+      animation: bgShift 8s ease-in-out infinite;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+    }
 
-<link rel="stylesheet" href="css/style.css">
+    /* ---------- Intro ---------- */
+    .intro-icon { font-size: 54px; margin-bottom: 6px; animation: bounce 2.2s ease-in-out infinite; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    h1 {
+      margin: 0 0 10px; font-size: 27px; font-weight: 900; letter-spacing: -.5px;
+      background: linear-gradient(90deg, #ff3d8b, #ff7ab8, #3d8bff, #ff3d8b);
+      background-size: 300% 100%; -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent; animation: textShift 6s linear infinite;
+    }
+    @keyframes textShift { to { background-position: 300% 0; } }
+    .intro-sub { color: #8b7fb8; font-size: 14.5px; font-weight: 600; line-height: 1.5; margin: 0 0 26px; }
+    .intro-count { color: #c3b9e8; font-size: 12px; font-weight: 700; margin-top: 14px; }
+
+    /* ---------- Carte message ---------- */
+    .count-sub { color: #b3aad6; font-size: 12.5px; font-weight: 700; margin: 0 0 18px; }
+    .m-tag {
+      display: inline-block; font-size: 11.5px; font-weight: 800; padding: 4px 12px; border-radius: 999px;
+      margin-bottom: 14px; color: #fff;
+    }
+    .fille .m-tag { background: #ff4d8d; }
+    .gars .m-tag { background: #3d8bff; }
+
+    .m-text {
+      font-size: 20px; font-weight: 800; line-height: 1.35; word-break: break-word;
+      min-height: 60px; display: flex; align-items: center; justify-content: center;
+      color: #2d2748;
+    }
+    .m-text.slide-next { animation: slideNext .32s ease both; }
+    .m-text.slide-prev { animation: slidePrev .32s ease both; }
+    @keyframes slideNext { from{opacity:0;transform:translateX(18px)} to{opacity:1;transform:none} }
+    @keyframes slidePrev { from{opacity:0;transform:translateX(-18px)} to{opacity:1;transform:none} }
+
+    .dots { display: flex; justify-content: center; gap: 5px; margin-top: 16px; flex-wrap: wrap; max-width: 220px; margin-left: auto; margin-right: auto; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: #e4dcff; transition: all .2s; }
+    .dot.on { background: linear-gradient(135deg,#ff4d8d,#3d8bff); width: 16px; }
+
+    .nav-row { display: flex; gap: 10px; margin-top: 24px; }
+    button.nav-btn {
+      flex: 1; padding: 15px 10px; font-size: 14.5px; font-weight: 900; border: none; border-radius: 16px;
+      cursor: pointer; transition: transform .12s, box-shadow .12s;
+    }
+    button.nav-btn:active { transform: translateY(1px) scale(.97); }
+    button#prev-btn { background: #f1edff; color: #7a6fa3; }
+    button#prev-btn:hover { background: #e6ddff; }
+    button#next-btn {
+      color: #fff; background: linear-gradient(90deg, #ff4d8d, #ff7ab8, #4d94ff, #ff4d8d); background-size: 300% 100%;
+      animation: textShift 6s linear infinite; box-shadow: 0 10px 24px rgba(255,77,141,.4);
+    }
+    button#next-btn:hover { box-shadow: 0 14px 28px rgba(77,148,255,.45); }
+
+    button.start-btn {
+      width: 100%; padding: 17px; font-size: 16.5px; font-weight: 900; letter-spacing: .3px;
+      color: #fff; border: none; border-radius: 16px; cursor: pointer;
+      background: linear-gradient(90deg, #ff4d8d, #ff7ab8, #4d94ff, #ff4d8d); background-size: 300% 100%;
+      animation: textShift 6s linear infinite;
+      box-shadow: 0 10px 26px rgba(255,77,141,.4);
+      transition: transform .12s, box-shadow .12s;
+    }
+    button.start-btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 14px 30px rgba(77,148,255,.45); }
+    button.start-btn:active { transform: translateY(1px) scale(.98); }
+
+    .results-empty { color: #9ca3af; font-size: 14px; }
+    .hidden { display: none !important; }
+  </style>
 </head>
 <body>
-
-<!-- ===== Top bar ===== -->
-<div class="topbar">
-  <div class="container topbar-inner">
-    <a href="tel:+14389383630"><i class="fa-solid fa-phone"></i> (438) 938-3630</a>
-    <span class="topbar-sep"></span>
-    <span><i class="fa-solid fa-location-dot"></i> 5980A R. Sherbrooke E, Montréal, QC H1N 1B8</span>
-    <span class="topbar-sep"></span>
-    <span id="open-status"><i class="fa-solid fa-clock"></i> Chargement des horaires...</span>
-  </div>
-</div>
-
-<!-- ===== Header / Nav ===== -->
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="#top" class="logo">Nabou <span>Beauty</span></a>
-
-    <nav class="main-nav" id="main-nav">
-      <a href="#about">À propos</a>
-      <a href="#services">Services</a>
-      <a href="#gallery">Galerie</a>
-      <a href="#reviews">Avis</a>
-      <a href="#hours">Horaires</a>
-      <a href="#contact">Contact</a>
-    </nav>
-
-    <div class="header-cta">
-      <a href="https://www.google.com/maps/dir/?api=1&destination=5980A+R.+Sherbrooke+E,+Montreal,+QC+H1N+1B8" target="_blank" rel="noopener" class="btn btn-outline">
-        <i class="fa-solid fa-diamond-turn-right"></i> Itinéraire
-      </a>
-      <a href="tel:+14389383630" class="btn btn-primary">
-        <i class="fa-solid fa-phone"></i> Appeler
-      </a>
+  <div class="wrap">
+    <div class="card" id="intro-card">
+      <div class="intro-icon">💘</div>
+      <h1>Qui est ta cruche ?</h1>
+      <p class="intro-sub">Découvre, un par un, qui les gens ont nommé —<br />à ton rythme, dans les deux sens.</p>
+      <button class="start-btn" id="start-btn" type="button">🔍 Découvrir les cruches</button>
+      <p class="intro-count" id="intro-count"></p>
     </div>
 
-    <button class="burger" id="burger" aria-label="Ouvrir le menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</header>
-
-<!-- ===== Hero ===== -->
-<section class="hero" id="top">
-  <div class="hero-bg"></div>
-  <div class="container hero-inner">
-    <p class="eyebrow"><i class="fa-solid fa-scissors"></i> Salon de coiffure à Montréal</p>
-    <h1>Nabou <span>Beauty</span></h1>
-    <p class="hero-sub">Tresses, soins capillaires &amp; coiffure afro dans une ambiance douce, professionnelle et à l'écoute de vos besoins.</p>
-
-    <div class="hero-rating">
-      <span class="stars" aria-label="Note de 4,7 sur 5">★★★★★</span>
-      <strong>4,7</strong>
-      <span class="muted">(110 avis Google)</span>
-    </div>
-
-    <div class="hero-actions">
-      <a href="#contact" class="btn btn-primary btn-lg"><i class="fa-solid fa-calendar-check"></i> Prendre rendez-vous</a>
-      <a href="https://www.instagram.com/naboubeauty/" target="_blank" rel="noopener" class="btn btn-ghost btn-lg"><i class="fa-brands fa-instagram"></i> Suivre sur Instagram</a>
-    </div>
-
-    <div class="hero-badge">
-      <i class="fa-solid fa-venus"></i> Entreprise fièrement détenue par des femmes
-    </div>
-  </div>
-</section>
-
-<!-- ===== Feature strip ===== -->
-<section class="feature-strip">
-  <div class="container feature-strip-inner">
-    <div class="feature-item"><i class="fa-solid fa-star"></i><span>4,7/5 sur 110 avis</span></div>
-    <div class="feature-item"><i class="fa-solid fa-venus"></i><span>Détenue par des femmes</span></div>
-    <div class="feature-item"><i class="fa-solid fa-hand-sparkles"></i><span>Cheveux texturés &amp; afro</span></div>
-    <div class="feature-item"><i class="fa-solid fa-location-dot"></i><span>Au cœur de Montréal</span></div>
-  </div>
-</section>
-
-<!-- ===== About ===== -->
-<section class="section" id="about">
-  <div class="container about-grid">
-    <div class="about-media">
-      <div class="media-photo media-1">
-        <img src="assets/images/cheveux-boucles.png" alt="Coiffure naturelle bouclée réalisée chez Nabou Beauty">
-      </div>
-      <div class="media-photo media-2">
-        <img src="assets/images/tresses-chignon.png" alt="Tresses relevées en chignon réalisées chez Nabou Beauty">
-      </div>
-      <div class="media-accent media-3"><i class="fa-solid fa-heart"></i><span>Passion &amp; savoir-faire</span></div>
-    </div>
-    <div class="about-text">
-      <p class="section-eyebrow">À propos de nous</p>
-      <h2>L'art de sublimer chaque chevelure</h2>
-      <p>Chez <strong>Nabou Beauty</strong>, nous croyons que chaque visite doit être un moment de détente et de confiance. Notre équipe de coiffeuses douces, à l'écoute et professionnelles vous accueille dans notre salon situé au cœur de Montréal pour vous offrir un service à la hauteur de vos attentes.</p>
-      <p>Que ce soit pour des tresses, un soin en profondeur ou une nouvelle coiffure, nous mettons tout notre savoir-faire au service de votre beauté naturelle.</p>
-
-      <ul class="about-list">
-        <li><i class="fa-solid fa-check"></i> Coiffeuses expérimentées et à l'écoute</li>
-        <li><i class="fa-solid fa-check"></i> Ambiance chaleureuse et professionnelle</li>
-        <li><i class="fa-solid fa-check"></i> Entreprise détenue par des femmes</li>
-        <li><i class="fa-solid fa-check"></i> Note de 4,7/5 sur plus de 110 avis</li>
-      </ul>
-
-      <div class="about-stats">
-        <div><strong>4,7★</strong><span>Note moyenne</span></div>
-        <div><strong>110+</strong><span>Avis clients</span></div>
-        <div><strong>100%</strong><span>Satisfaction visée</span></div>
+    <div class="card hidden" id="browser-card">
+      <p class="count-sub" id="counter"></p>
+      <div id="content"></div>
+      <div class="dots" id="dots"></div>
+      <div class="nav-row">
+        <button class="nav-btn" id="prev-btn" type="button">◀ Précédent</button>
+        <button class="nav-btn" id="next-btn" type="button">Suivant ▶</button>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ===== Services ===== -->
-<section class="section section-alt" id="services">
-  <div class="container">
-    <p class="section-eyebrow text-center">Nos prestations</p>
-    <h2 class="text-center">Services de coiffure</h2>
-    <p class="section-intro text-center">Une gamme complète de services pensés pour la beauté et la santé de vos cheveux. Contactez-nous pour connaître les tarifs et la disponibilité.</p>
+  <script src="messages.js"></script>
+  <script>
+    function el(tag, cls, text) {
+      const e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text !== undefined) e.textContent = text; // jamais interprété comme du HTML
+      return e;
+    }
+    /** Mélange l'ordre une fois au chargement, pour ne pas revoir tout dans le même ordre à chaque visite. */
+    function shuffle(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
 
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="service-icon"><i class="fa-solid fa-braille"></i></div>
-        <h3>Tresses &amp; nattes</h3>
-        <p>Box braids, vanilles, nattes collées et créations sur mesure adaptées à votre style.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon"><i class="fa-solid fa-pump-soap"></i></div>
-        <h3>Soins capillaires</h3>
-        <p>Traitements en profondeur, hydratation et fortification pour des cheveux en santé.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon"><i class="fa-solid fa-scissors"></i></div>
-        <h3>Coupe &amp; coiffure</h3>
-        <p>Coupes personnalisées et mises en forme pour toutes les occasions.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-        <h3>Coiffure afro</h3>
-        <p>Techniques spécialisées pour cheveux texturés, respectueuses de leur nature.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon"><i class="fa-solid fa-crown"></i></div>
-        <h3>Extensions &amp; perruques</h3>
-        <p>Pose et entretien d'extensions et perruques pour un rendu naturel et durable.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon"><i class="fa-solid fa-child-reaching"></i></div>
-        <h3>Coiffure enfants</h3>
-        <p>Service adapté et patient pour les plus petits, dans la bonne humeur.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    const order = shuffle(MESSAGES.filter((m) => m && m.text && m.text.trim()));
+    let index = 0;
 
-<!-- ===== Gallery ===== -->
-<section class="section" id="gallery">
-  <div class="container">
-    <p class="section-eyebrow text-center">Galerie</p>
-    <h2 class="text-center">Notre univers</h2>
-    <p class="section-intro text-center">Quelques-unes de nos réalisations. Cliquez pour agrandir, ou retrouvez-en plus sur notre compte Instagram <a href="https://www.instagram.com/naboubeauty/" target="_blank" rel="noopener">@naboubeauty</a>.</p>
+    const introCard = document.getElementById('intro-card');
+    const browserCard = document.getElementById('browser-card');
+    const contentEl = document.getElementById('content');
+    const counterEl = document.getElementById('counter');
+    const dotsEl = document.getElementById('dots');
 
-    <div class="gallery-grid">
-      <button type="button" class="gallery-item" data-full="assets/images/tresses-collees.png" data-caption="Tresses collées avec longueurs bouclées">
-        <img src="assets/images/tresses-collees.png" alt="Tresses collées avec longueurs bouclées - Nabou Beauty" loading="lazy">
-        <span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-      </button>
-      <button type="button" class="gallery-item" data-full="assets/images/cheveux-boucles.png" data-caption="Coiffure naturelle bouclée">
-        <img src="assets/images/cheveux-boucles.png" alt="Coiffure naturelle bouclée - Nabou Beauty" loading="lazy">
-        <span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-      </button>
-      <button type="button" class="gallery-item" data-full="assets/images/tresses-chignon.png" data-caption="Tresses relevées en chignon">
-        <img src="assets/images/tresses-chignon.png" alt="Tresses relevées en chignon - Nabou Beauty" loading="lazy">
-        <span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-      </button>
-    </div>
+    document.getElementById('intro-count').textContent =
+      order.length + ' message' + (order.length !== 1 ? 's' : '') + ' à découvrir';
 
-    <div class="text-center" style="margin-top: 40px;">
-      <a href="https://www.instagram.com/naboubeauty/" target="_blank" rel="noopener" class="btn btn-outline">
-        <i class="fa-brands fa-instagram"></i> Voir plus sur Instagram
-      </a>
-    </div>
-  </div>
-</section>
+    function renderDots() {
+      dotsEl.innerHTML = '';
+      const max = Math.min(order.length, 30); // évite des centaines de points si la liste grossit un jour
+      for (let i = 0; i < max; i++) {
+        dotsEl.appendChild(el('span', 'dot' + (i === index ? ' on' : '')));
+      }
+    }
 
-<!-- ===== Reviews ===== -->
-<section class="section section-alt" id="reviews">
-  <div class="container">
-    <p class="section-eyebrow text-center">Avis clients</p>
-    <h2 class="text-center">Ce que nos clientes disent</h2>
+    function show(direction) {
+      if (order.length === 0) {
+        counterEl.textContent = '';
+        contentEl.innerHTML = '';
+        contentEl.appendChild(el('p', 'results-empty', 'Aucun message pour le moment.'));
+        dotsEl.innerHTML = '';
+        document.querySelector('.nav-row').classList.add('hidden');
+        return;
+      }
 
-    <div class="rating-summary">
-      <div class="rating-score">
-        <span class="score">4,7</span>
-        <span class="stars">★★★★★</span>
-        <span class="muted">110 avis Google</span>
-      </div>
-    </div>
+      const m = order[index];
+      const kind = m.kind === 'gars' ? 'gars' : 'fille';
+      browserCard.className = 'card ' + kind;
 
-    <div class="reviews-grid">
-      <blockquote class="review-card">
-        <i class="fa-solid fa-quote-left quote-icon"></i>
-        <p>"Les coiffeuses sont douces, à l'écoute et font preuve de professionnalisme."</p>
-        <div class="stars">★★★★★</div>
-      </blockquote>
-      <blockquote class="review-card">
-        <i class="fa-solid fa-quote-left quote-icon"></i>
-        <p>"Merci les filles pour les compliments."</p>
-        <div class="stars">★★★★★</div>
-      </blockquote>
-      <blockquote class="review-card">
-        <i class="fa-solid fa-quote-left quote-icon"></i>
-        <p>"Quand le service est satisfaisant, il faut le dire !"</p>
-        <div class="stars">★★★★★</div>
-      </blockquote>
-    </div>
+      counterEl.textContent = 'Message ' + (index + 1) + ' / ' + order.length;
 
-    <div class="text-center">
-      <a href="https://www.google.com/maps" target="_blank" rel="noopener" class="btn btn-outline">
-        <i class="fa-brands fa-google"></i> Voir tous les avis sur Google
-      </a>
-    </div>
-  </div>
-</section>
+      contentEl.innerHTML = '';
+      contentEl.appendChild(el('div', 'm-tag', kind === 'fille' ? '👧 Fille' : '👦 Gars'));
+      const textEl = el('div', 'm-text' + (direction ? ' slide-' + direction : ''), m.text);
+      contentEl.appendChild(textEl);
 
-<!-- ===== Hours ===== -->
-<section class="section" id="hours">
-  <div class="container hours-grid">
-    <div>
-      <p class="section-eyebrow">Horaires d'ouverture</p>
-      <h2>Quand nous rendre visite</h2>
-      <p class="section-intro">Horaires indicatifs — nous vous recommandons d'appeler pour confirmer la disponibilité, surtout les jours de forte affluence.</p>
+      renderDots();
+    }
 
-      <table class="hours-table" id="hours-table">
-        <tbody>
-          <tr data-day="0"><td>Dimanche</td><td>Fermé</td></tr>
-          <tr data-day="1"><td>Lundi</td><td>Fermé</td></tr>
-          <tr data-day="2"><td>Mardi</td><td>10 h 30 – 19 h 00</td></tr>
-          <tr data-day="3"><td>Mercredi</td><td>10 h 30 – 19 h 00</td></tr>
-          <tr data-day="4"><td>Jeudi</td><td>10 h 30 – 19 h 00</td></tr>
-          <tr data-day="5"><td>Vendredi</td><td>10 h 30 – 20 h 00</td></tr>
-          <tr data-day="6"><td>Samedi</td><td>9 h 00 – 18 h 00</td></tr>
-        </tbody>
-      </table>
-      <p class="hours-note"><i class="fa-solid fa-circle-info"></i> Confirmé par le profil Google : ouverture mardi à 10 h 30.</p>
-    </div>
+    function next() {
+      index = (index + 1) % order.length;
+      show('next');
+    }
+    function prev() {
+      index = (index - 1 + order.length) % order.length;
+      show('prev');
+    }
 
-    <div class="contact-card">
-      <h3>Coordonnées</h3>
-      <ul class="contact-list">
-        <li><i class="fa-solid fa-location-dot"></i> 5980A R. Sherbrooke E, Montréal, QC H1N 1B8</li>
-        <li><i class="fa-solid fa-phone"></i> <a href="tel:+14389383630">(438) 938-3630</a></li>
-        <li><i class="fa-brands fa-instagram"></i> <a href="https://www.instagram.com/naboubeauty/" target="_blank" rel="noopener">@naboubeauty</a></li>
-        <li><i class="fa-solid fa-location-crosshairs"></i> Code Plus : HFG3+J9 Montréal, Québec</li>
-        <li><i class="fa-solid fa-venus"></i> Détenue par des femmes</li>
-      </ul>
-      <a href="https://www.google.com/maps/dir/?api=1&destination=5980A+R.+Sherbrooke+E,+Montreal,+QC+H1N+1B8" target="_blank" rel="noopener" class="btn btn-primary btn-block">
-        <i class="fa-solid fa-diamond-turn-right"></i> Obtenir l'itinéraire
-      </a>
-    </div>
-  </div>
-</section>
+    document.getElementById('next-btn').addEventListener('click', next);
+    document.getElementById('prev-btn').addEventListener('click', prev);
 
-<!-- ===== Map ===== -->
-<section class="map-section">
-  <iframe
-    title="Localisation Nabou Beauty"
-    src="https://www.google.com/maps?q=5980A+R.+Sherbrooke+E,+Montreal,+QC+H1N+1B8&output=embed"
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
-</section>
+    document.getElementById('start-btn').addEventListener('click', () => {
+      introCard.classList.add('hidden');
+      browserCard.classList.remove('hidden');
+      show();
+    });
 
-<!-- ===== Contact ===== -->
-<section class="section section-alt" id="contact">
-  <div class="container contact-grid">
-    <div>
-      <p class="section-eyebrow">Contact</p>
-      <h2>Contactez-nous</h2>
-      <p class="section-intro">Un message, une question ou une demande de rendez-vous ? Écrivez-nous, nous vous répondrons rapidement.</p>
-
-      <form class="contact-form" id="contact-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Nom complet</label>
-            <input type="text" id="name" name="name" required placeholder="Votre nom">
-          </div>
-          <div class="form-group">
-            <label for="phone">Téléphone</label>
-            <input type="tel" id="phone" name="phone" required placeholder="(438) 000-0000">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="service">Service souhaité</label>
-          <select id="service" name="service">
-            <option value="tresses">Tresses &amp; nattes</option>
-            <option value="soins">Soins capillaires</option>
-            <option value="coupe">Coupe &amp; coiffure</option>
-            <option value="afro">Coiffure afro</option>
-            <option value="extensions">Extensions &amp; perruques</option>
-            <option value="autre">Autre</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="4" placeholder="Parlez-nous de votre demande..."></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary btn-lg btn-block">
-          <i class="fa-solid fa-paper-plane"></i> Envoyer la demande
-        </button>
-        <p class="form-note" id="form-note"></p>
-      </form>
-    </div>
-
-    <div class="contact-side">
-      <div class="contact-side-card">
-        <i class="fa-solid fa-phone contact-side-icon"></i>
-        <h4>Par téléphone</h4>
-        <a href="tel:+14389383630">(438) 938-3630</a>
-      </div>
-      <div class="contact-side-card">
-        <i class="fa-brands fa-instagram contact-side-icon"></i>
-        <h4>Sur Instagram</h4>
-        <a href="https://www.instagram.com/naboubeauty/" target="_blank" rel="noopener">Envoyez-nous un DM</a>
-      </div>
-      <div class="contact-side-card">
-        <i class="fa-solid fa-location-dot contact-side-icon"></i>
-        <h4>En personne</h4>
-        <span>5980A R. Sherbrooke E, Montréal, QC</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== CTA banner ===== -->
-<section class="cta-banner">
-  <div class="container cta-banner-inner">
-    <h2>Prête à sublimer votre coiffure ?</h2>
-    <p>Réservez votre rendez-vous dès aujourd'hui et laissez notre équipe prendre soin de vous, avec douceur et professionnalisme.</p>
-    <div class="cta-banner-actions">
-      <a href="tel:+14389383630" class="btn btn-white btn-lg"><i class="fa-solid fa-phone"></i> Appeler maintenant</a>
-      <a href="#contact" class="btn btn-ghost btn-lg"><i class="fa-solid fa-envelope"></i> Écrire un message</a>
-    </div>
-  </div>
-</section>
-
-<!-- ===== Footer ===== -->
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <div class="footer-brand">
-      <a href="#top" class="logo">Nabou <span>Beauty</span></a>
-      <p>Salon de coiffure à Montréal — tresses, soins et coiffure afro dans une ambiance chaleureuse et professionnelle.</p>
-      <div class="social-links">
-        <a href="https://www.instagram.com/naboubeauty/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="tel:+14389383630" aria-label="Téléphone"><i class="fa-solid fa-phone"></i></a>
-      </div>
-    </div>
-
-    <div class="footer-col">
-      <h4>Navigation</h4>
-      <a href="#about">À propos</a>
-      <a href="#services">Services</a>
-      <a href="#gallery">Galerie</a>
-      <a href="#reviews">Avis</a>
-      <a href="#hours">Horaires</a>
-      <a href="#contact">Contact</a>
-    </div>
-
-    <div class="footer-col">
-      <h4>Coordonnées</h4>
-      <p><i class="fa-solid fa-location-dot"></i> 5980A R. Sherbrooke E, Montréal, QC H1N 1B8</p>
-      <p><i class="fa-solid fa-phone"></i> (438) 938-3630</p>
-      <p><i class="fa-solid fa-location-crosshairs"></i> HFG3+J9 Montréal, Québec</p>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <div class="container">
-      <p>&copy; <span id="year"></span> Nabou Beauty. Tous droits réservés.</p>
-    </div>
-  </div>
-</footer>
-
-<a href="tel:+14389383630" class="mobile-call-fab" aria-label="Appeler Nabou Beauty">
-  <i class="fa-solid fa-phone"></i>
-</a>
-
-<button type="button" class="back-to-top" id="back-to-top" aria-label="Retour en haut de la page">
-  <i class="fa-solid fa-arrow-up"></i>
-</button>
-
-<!-- ===== Gallery lightbox ===== -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
-  <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Fermer l'aperçu"><i class="fa-solid fa-xmark"></i></button>
-  <figure class="lightbox-figure">
-    <img src="" alt="" id="lightbox-img">
-    <figcaption id="lightbox-caption"></figcaption>
-  </figure>
-</div>
-
-<script src="js/script.js"></script>
+    // Décor : coeurs roses et bleus qui montent doucement
+    const HEARTS = ['💗', '💖', '💙', '💘', '💕'];
+    for (let i = 0; i < 16; i++) {
+      const h = document.createElement('span');
+      h.className = 'heart';
+      h.textContent = HEARTS[i % HEARTS.length];
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.fontSize = 16 + Math.random() * 26 + 'px';
+      h.style.animationDuration = 9 + Math.random() * 10 + 's';
+      h.style.animationDelay = -Math.random() * 18 + 's';
+      document.body.appendChild(h);
+    }
+  </script>
 </body>
 </html>
